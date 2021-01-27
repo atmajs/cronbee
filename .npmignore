@@ -2,6 +2,8 @@ test/
 tools/
 src/
 typings/
+ts-temp/
+logs/
 tsconfig-build.json
 tsconfig.json
 typings.json

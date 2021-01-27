@@ -1,7 +1,8 @@
 {
     "name": "cronbee",
-    "version": "0.5.9",
-    "main": "./lib/cron.js",
+    "version": "0.5.10",
+    "main": "./lib/cronbee.js",
+    "types": "./lib/cronbee.d.ts",
     "bin": {
         "cronbee": "index.js"
     },
@@ -40,7 +41,7 @@
             },
             "module": {
                 "file": "src/export.ts",
-                "outputMain": "lib/cron.js"
+                "outputMain": "lib/cronbee.js"
             }
         },
         "common": {

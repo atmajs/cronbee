@@ -35,17 +35,14 @@ export class Runner {
             ]
         });
 
-        let argv = process.argv.slice(2).map(str => {
-            if (str.includes(' ') && /'"\(/.test(str)) {
-                return `"${str}"`;
-            }
-            return str;
-        });
-        let started = Date.now();
-        let command = argv.join(' ');
+        let args = process.argv.slice(2);
 
+        let cwd = HandleArgs.extractCwdIfAny(args);
+        let command = HandleArgs.serialize(args);
+        let started = Date.now();
         let shell = await Shell.run({
             command,
+            cwd
         });
 
         channel.writeRow([
@@ -61,3 +58,29 @@ export class Runner {
 }
 
 
+namespace HandleArgs {
+    function whitespaces (args: string[]) {
+        for (let i = 0; i < args.length; i++) {
+            let str = args[i];
+            if (str.includes(' ') && /'"\(/.test(str)) {
+                args[i] = `"${str}"`;
+            }
+        }
+    }
+    export function serialize (args: string[]) {
+        whitespaces(args);
+        return args.join(' ');
+    }
+    export function extractCwdIfAny (args: string[]) {
+        for (let i = 0; i < args.length; i++) {
+            let str = args[i];
+            if (/[\-]{1,2}cwd/i.test(str)) {
+                let cwd = args[i + 1];
+
+                args.splice(i, 2);
+                return cwd;
+            }
+        }
+        return null;
+    }
+}
