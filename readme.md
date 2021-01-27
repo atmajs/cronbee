@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/atmajs/cronbee.svg?branch=master)](https://travis-ci.org/atmajs/cronbee)
 [![NPM version](https://badge.fury.io/js/cronbee.svg)](http://badge.fury.io/js/cronbee)
 
-Manage, run and log all your scheduled tasks using system capabilities: **`crontab`** and **`schtasks`**
+Manage, run and log all your scheduled tasks using system capabilities with **`crontab`** and **`schtasks`**
 
 ### Scheduler
 
@@ -22,7 +22,7 @@ await cronbee.ensure({
     taskRun: `node emailchecker --foo`,
 
     // By default the working directory will be the current directory
-    workingDirectory: '/home/www/web'
+    workingDirectory: '/home/www'
 
     /** Depending on the system, define timing configurations for crontab or schtasks separately */
 
