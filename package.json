@@ -1,0 +1,108 @@
+{
+    "name": "cronbee",
+    "version": "0.5.8",
+    "main": "./lib/cron.js",
+    "bin": {
+        "cronbee": "index.js"
+    },
+    "author": {
+        "name": "Alex Kit",
+        "email": "alex.kit@atmajs.com"
+    },
+    "dependencies": {
+        "appcfg": "^0.3.2",
+        "atma-io": "^1.2.26",
+        "atma-server-monit": "^1.0.29",
+        "atma-utils": "^0.1.38",
+        "memd": "^0.2.90",
+        "shellbee": "^0.5.8"
+    },
+    "devDependencies": {
+        "@types/node": "^12.6.2",
+        "app-bundler": "0.0.70",
+        "atma": "^0.12.18",
+        "atma-loader-ts": "^1.1.12",
+        "dts-bundle": "^0.7.3"
+    },
+    "scripts": {
+        "build": "app-bundler && npm run dts",
+        "dts": "tsc -p tsconfig-build.json && atma run tools/build-dts",
+        "watch": "app-bundler -watch",
+        "release": "echo \"Run atma pub -m \"message\"\"",
+        "test": "atma test",
+        "server": "atma server"
+    },
+    "app-bundler": {
+        "apps": {
+            "cli": {
+                "file": "src/cli.ts",
+                "outputMain": "lib/cli.js"
+            },
+            "module": {
+                "file": "src/export.ts",
+                "outputMain": "lib/cron.js"
+            }
+        },
+        "common": {
+            "package": {
+                "module": "commonjs",
+                "commonjs": {
+                    "output": "simplified"
+                }
+            },
+            "extensions": {
+                "io": {
+                    "type": "js"
+                }
+            },
+            "defaultExtensions": {
+                "js": "ts"
+            },
+            "dynamicDependencies": [
+                "shellbee",
+                "atma-server-monit",
+                "memd",
+                "atma-io",
+                "atma-utils",
+                "^path$",
+                "child_process"
+            ],
+            "middlewares": {
+                "ts": [
+                    "atma-loader-ts:read"
+                ]
+            }
+        }
+    },
+    "atma": {
+        "plugins": [
+            "atma-loader-ts"
+        ],
+        "settings": {
+            "atma-utest": {
+                "include": {
+                    "amd": true
+                }
+            },
+            "include": {
+                "amd": true,
+                "extentionDefault": {
+                    "js": "ts"
+                }
+            },
+            "atma-loader-ts": {
+                "typescript": {
+                    "compilerOptions": {
+                        "#if (TEST)": {
+                            "module": "AMD"
+                        },
+                        "#if (!TEST)": {
+                            "module": "commonjs"
+                        },
+                        "sourceMap": false
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+sudo: required
+
+services:
+  - xvfb
+
+addons:
+  firefox: "latest"
+
+before_script:
+  - export DISPLAY=:99.0
+  - sleep 3
+  - npm run build &
+  - sleep 8
+ 
+script:
+  - "npm test"
+ 
+language: node_js
+
+
+node_js:
+  - "10.1.0"
