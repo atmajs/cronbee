@@ -18,7 +18,8 @@ export namespace CommandUtil {
             return command;
         }
         if (match[0] === 'cronbee') {
-            command = await rewriteAbsPath(slice(command, match), cwd);
+            let args = await rewriteAbsPath(slice(command, match), cwd);
+            command = `cronbee ${args}`;
         }
         let path = await getAbsPathIfNodeModule(match[0], cwd);
         if (path) {
