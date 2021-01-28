@@ -369,7 +369,6 @@ export class CronTab {
             args.unshift(command);
             command = `wsl`;
         }
-
         return { command, args };
     }
     /**

@@ -1,10 +1,17 @@
 import { Shell } from 'shellbee'
 import { Monit } from 'atma-server-monit'
+import { class_Uri } from 'atma-utils';
 
 export class Runner {
     async run () {
 
-        Monit.startLogger({ directory: './logs' });
+        let args = process.argv.slice(2);
+        let cwd = HandleArgs.extractCwdIfAny(args);
+        let command = HandleArgs.serialize(args);
+
+        Monit.startLogger({
+            directory: class_Uri.combine(cwd, '/logs')
+        });
 
         let channel = Monit.createChannel('cronbee', {
             fields: [
@@ -35,10 +42,6 @@ export class Runner {
             ]
         });
 
-        let args = process.argv.slice(2);
-
-        let cwd = HandleArgs.extractCwdIfAny(args);
-        let command = HandleArgs.serialize(args);
         let started = Date.now();
         let shell = await Shell.run({
             command,

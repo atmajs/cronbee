@@ -42,7 +42,7 @@ export class SchtasksLib implements IScheduler {
         let args = [
             `/f`,
             `/tn "${params.taskName}"`,
-            `/tr "${params.taskRun}"`,
+            `/tr "cmd /C ${params.taskRun}"`,
             params.schtaskFlags
         ].filter(Boolean);
 
