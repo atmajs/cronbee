@@ -1,20 +1,16 @@
 import memd from 'memd';
 import { ICreateJob, IJobInfo } from '../../../models/IJob';
 import { IScheduler } from '../../../models/IScheduler';
+import { CronJob } from './CronJob';
 import { CronTab } from './CronTab';
 
 export class CronTabLib implements IScheduler {
-
 
     async load (): Promise<IJobInfo[]> {
         let crontab = await CronTabLoader.load();
 
         return crontab._jobs.map(job => {
-            return {
-                name: job._comment?.comment || job.line,
-                enabled: true,
-                command: job._command?.command,
-            };
+            return CronJob.toModel(job);
         })
     }
 
@@ -26,12 +22,12 @@ export class CronTabLib implements IScheduler {
         let crontab = await CronTabLoader.load();
         let job = crontab._jobs.find(x => x._comment?.comment === params.taskName);
         if (job != null) {
-            return job;
+            return CronJob.toModel(job);
         }
 
         job = crontab.create(params.taskRun, params.cron, params.taskName);
         await crontab.save();
-        return job;
+        return CronJob.toModel(job);
     }
 
     async remove (params: { taskName: string }) {
@@ -40,7 +36,6 @@ export class CronTabLib implements IScheduler {
         if (job == null) {
             return;
         }
-
         crontab.remove(job);
         await crontab.save();
     }

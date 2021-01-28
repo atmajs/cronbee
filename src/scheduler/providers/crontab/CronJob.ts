@@ -367,6 +367,14 @@ export class CronJob {
         }
     }
 
+    static toModel (job: CronJob) {
+        return {
+            name: job._comment?.comment || job.line,
+            enabled: true,
+            command: job._command?.command,
+        };
+    }
+
 }
 
 /* @api private */
