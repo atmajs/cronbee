@@ -34,7 +34,7 @@ export namespace CommandUtil {
 
     async function getAbsPathIfNodeModule(name: string, cwd) {
         let path = class_Uri.combine(cwd, '/node_modules/.bin/', name);
-        let exists = await File.existsAsync(path);
+        let exists = await File.existsAsync('file://' + path);
         if (exists) {
             return path;
         }
