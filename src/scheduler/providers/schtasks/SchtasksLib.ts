@@ -39,11 +39,10 @@ export class SchtasksLib implements IScheduler {
             throw new Error(`To use schtasks provide cli time flags`);
         }
 
-        let path = params.workingDirectory ?? process.cwd();
         let args = [
             `/f`,
             `/tn "${params.taskName}"`,
-            `/tr "cd ${path} && ${params.taskRun}"`,
+            `/tr "${params.taskRun}"`,
             params.schtaskFlags
         ].filter(Boolean);
 

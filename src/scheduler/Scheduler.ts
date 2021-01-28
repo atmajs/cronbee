@@ -10,6 +10,14 @@ export class Scheduler implements IScheduler{
         return this.getSystem().load();
     }
     ensure(params: ICreateJob): Promise<any> {
+        let path = params.workingDirectory ?? process.cwd();
+
+        if (params.taskRun.includes('cronbee') && params.taskRun.includes('-cwd') === false) {
+            params.taskRun = `${params.taskRun} --cwd ${path}`;
+        }
+        if (params.taskRun.includes('-cwd') === false && process.platform !== 'win32') {
+            params.taskRun = `cd ${path} && ${params.taskRun}`;
+        }
         return this.getSystem().ensure(params);
     }
     remove(params: { taskName: string; }): Promise<any> {
