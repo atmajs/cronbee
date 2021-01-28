@@ -1,6 +1,6 @@
 {
     "name": "cronbee",
-    "version": "0.5.14",
+    "version": "0.5.15",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -14,6 +14,7 @@
         "appcfg": "^0.3.2",
         "atma-io": "^1.2.26",
         "atma-server-monit": "^1.0.30",
+        "atma-utest": "^0.21.14",
         "atma-utils": "^0.1.38",
         "memd": "^0.2.90",
         "shellbee": "^0.5.8"
@@ -82,7 +83,10 @@
         "settings": {
             "atma-utest": {
                 "include": {
-                    "amd": true
+                    "amd": true,
+                    "extentionDefault": {
+                        "js": "ts"
+                    }
                 }
             },
             "include": {

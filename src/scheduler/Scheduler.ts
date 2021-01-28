@@ -3,21 +3,22 @@ import { IJobInfo, ICreateJob } from '../models/IJob';
 import { IScheduler } from '../models/IScheduler';
 import { CronTabLib } from './providers/crontab/CronTabLib';
 import { SchtasksLib } from './providers/schtasks/SchtasksLib';
-
+import { CommandUtil } from '../utils/CommandUtil';
 
 export class Scheduler implements IScheduler{
     load(): Promise<IJobInfo[]> {
         return this.getSystem().load();
     }
-    ensure(params: ICreateJob): Promise<any> {
-        let path = params.workingDirectory ?? process.cwd();
+    async ensure(params: ICreateJob): Promise<any> {
+        let cwd = params.workingDirectory ?? process.cwd();
 
-        if (params.taskRun.includes('cronbee') && params.taskRun.includes('-cwd') === false) {
-            params.taskRun = `${params.taskRun} --cwd ${path}`;
-        }
-        if (params.taskRun.includes('-cwd') === false && process.platform !== 'win32') {
-            params.taskRun = `cd ${path} && ${params.taskRun}`;
-        }
+        // if (params.taskRun.includes('cronbee') && params.taskRun.includes('-cwd') === false) {
+        //     params.taskRun = `${params.taskRun} --cwd ${cwd}`;
+        // }
+        // if (params.taskRun.includes('-cwd') === false && process.platform !== 'win32') {
+        //     params.taskRun = `cd ${cwd} && ${params.taskRun}`;
+        // }
+        params.taskRun = await CommandUtil.formatPaths(params.taskRun, cwd);
         return this.getSystem().ensure(params);
     }
     remove(params: { taskName: string; }): Promise<any> {
@@ -32,3 +33,6 @@ export class Scheduler implements IScheduler{
         return new CronTabLib();
     }
 }
+
+
+
