@@ -50,6 +50,11 @@ UTest({
             await crontab.remove({
                 taskName: taskName,
             });
+
+            crontab = new CronTabLib();
+            let jobs = await crontab.load();
+            let job = jobs.find(x => x.name === taskName)
+            eq_(job, null);
         }
     }
 })

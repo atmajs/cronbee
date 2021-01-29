@@ -242,10 +242,7 @@ export class CronTab {
      * @param {String} __Array[CronJob]__
      */
     remove(job: CronJob) {
-
-
         this.removeInner(job);
-
         this.truncateLines();
     }
     /**
@@ -419,14 +416,11 @@ export class CronTab {
      * @api private
      */
     private truncateLines() {
-        let undefined;
         let line = this.lines.pop();
-
-        while (line != undefined && line.toString().trim() == '') {
+        while (line?.toString()?.trim() === '') {
             line = this.lines.pop();
         }
-
-        if (line != undefined) {
+        if (line != null) {
             this.lines.push(line);
         }
     }

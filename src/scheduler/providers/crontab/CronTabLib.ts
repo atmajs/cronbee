@@ -34,7 +34,7 @@ export class CronTabLib implements IScheduler {
         let crontab = await CronTabLoader.load();
         let job = crontab._jobs.find(x => x._comment?.comment === params.taskName);
         if (job == null) {
-            return;
+            throw new Error(`"${params.taskName}" not found`);
         }
         crontab.remove(job);
         await crontab.save();
