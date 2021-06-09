@@ -1,6 +1,6 @@
 {
     "name": "cronbee",
-    "version": "0.5.18",
+    "version": "0.5.19",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -11,8 +11,9 @@
         "email": "alex.kit@atmajs.com"
     },
     "dependencies": {
-        "appcfg": "^0.3.2",
-        "atma-io": "^1.2.26",
+        "alot": "^0.2.84",
+        "appcfg": "^0.4.53",
+        "atma-io": "^1.2.34",
         "atma-server-monit": "^1.0.30",
         "atma-utest": "^0.21.14",
         "atma-utils": "^0.1.38",
@@ -64,6 +65,8 @@
                 "shellbee",
                 "atma-server-monit",
                 "memd",
+                "appcfg",
+                "alot",
                 "atma-io",
                 "atma-utils",
                 "^path$",

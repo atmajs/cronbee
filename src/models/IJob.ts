@@ -8,6 +8,7 @@ export interface IJobInfo {
 
 export interface ICreateJob {
     workingDirectory?: string
+
     taskName: string
     taskRun: string
 

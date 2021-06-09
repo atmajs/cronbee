@@ -1,0 +1,7 @@
+{
+    "tasks": [{
+        "taskName": "some_echo",
+        "taskRun": "cronbee echo Foo",
+        "cron":  "0 0 12 * *"
+    }]
+}

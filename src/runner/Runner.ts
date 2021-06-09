@@ -1,16 +1,24 @@
 import { Shell } from 'shellbee'
 import { Monit } from 'atma-server-monit'
 import { class_Uri } from 'atma-utils';
+import { Commands } from './Commands';
 
 export class Runner {
     async run () {
 
         let args = process.argv.slice(2);
+
+        let task = args[0];
+        if (task in Commands) {
+            await Commands[task](args.slice(1));
+            return;
+        }
+
         let cwd = HandleArgs.extractCwdIfAny(args);
         let command = HandleArgs.serialize(args);
 
         Monit.startLogger({
-            directory: class_Uri.combine(cwd, '/logs')
+            directory: class_Uri.combine(cwd, '/logs/monit')
         });
 
         let channel = Monit.createChannel('cronbee', {
@@ -43,20 +51,33 @@ export class Runner {
         });
 
         let started = Date.now();
-        let shell = await Shell.run({
-            command,
-            cwd
-        });
+        try {
+            let shell = await Shell.run({
+                command,
+                cwd
+            });
+            channel.writeRow([
+                new Date(),
+                Date.now() - started,
+                command,
+                shell.lastCode,
+                shell.stdout.join(''),
+                shell.stderr.join(''),
+            ]);
+            channel.flush();
+        } catch (error) {
+            channel.writeRow([
+                new Date(),
+                Date.now() - started,
+                command,
+                500,
+                '',
+                error.stack ?? error.message,
+            ]);
+            channel.flush();
+        } finally {
 
-        channel.writeRow([
-            new Date(),
-            Date.now() - started,
-            command,
-            shell.lastCode,
-            shell.stdout.join(''),
-            shell.stderr.join(''),
-        ]);
-        channel.flush();
+        }
     }
 }
 

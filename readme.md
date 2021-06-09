@@ -6,7 +6,7 @@
 
 Manage, run and log all your scheduled tasks using system capabilities with **`crontab`** and **`schtasks`**
 
-### Scheduler
+### Scheduler API
 
 ##### Create scheduled task
 
@@ -47,7 +47,7 @@ await cronbee.remove({ taskName: 'check emails' });
 
 ### Runner
 
-Though you can define any shell command to be executed at scheduled time, you can also use the `cronbee` as a wrapped runner, to log executions to CSV files. Just prefix your command with `cronbee` and you are done.
+Though you can define any shell command to be executed at scheduled time, you can also use the `cronbee` as a wrapped runner, to log executions to CSV files. Just prefix your command with `cronbee` and you are done. The logs can be found in `./logs/monit/cronbee`
 
 ```ts
 await cronbee.ensure({
@@ -55,5 +55,35 @@ await cronbee.ensure({
     taskRun: `cronbee node emailchecker --foo`,
 });
 ```
+
+
+### Scheduler CLI
+
+#### List active cron jobs
+
+```bash
+cronbee list
+```
+
+#### Ensure cron jobs (from File)
+
+```bash
+cronbee ensure ./cronbee.json
+```
+
+`JSON` sample:
+
+```json
+{
+    "tasks": [
+        {
+            "taskName": "some_echo",
+            "taskRun": "cronbee echo Foo",
+            "cron":  "0 0 12 * *"
+        }
+    ]
+}
+```
+
 
 ----
