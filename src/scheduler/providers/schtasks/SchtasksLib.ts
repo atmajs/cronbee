@@ -36,7 +36,7 @@ export class SchtasksLib implements IScheduler {
     }
     async ensure (params: ICreateJob) {
         if (!params.schtaskFlags) {
-            throw new Error(`To use schtasks provide cli time flags`);
+            throw new Error(`To use schtasks provide cli time flags, e.g. "schtaskFlags": "/sc daily /st 12:00"`);
         }
 
         let args = [

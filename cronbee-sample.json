@@ -2,6 +2,7 @@
     "tasks": [{
         "taskName": "some_echo",
         "taskRun": "cronbee echo Foo",
-        "cron":  "0 0 12 * *"
+        "cron":  "0 12 * * *",
+        "schtaskFlags": "/sc daily /st 12:00"
     }]
 }

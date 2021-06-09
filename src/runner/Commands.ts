@@ -19,6 +19,19 @@ export const Commands = {
             console.log(`Still no tasks with prefix: ${prefix}`);
         }
     },
+    async clear (args: string[]) {
+        let cronbee = new Scheduler();
+        let currentJobs = await Jobs.load(PREFIX);
+
+        // clear
+        await alot(currentJobs)
+            .forEachAsync(async job => {
+                await cronbee.remove({ taskName: job.name })
+            })
+            .toArrayAsync({ threads: 1 });
+
+        console.log(`Removed ${currentJobs.length}`, currentJobs.map(x => x.name));
+    },
     async ensure (args: string[]) {
         let file = args.find(str => /\w+\.\w+$/g.test(str)) ?? 'cronbee.json';
         let exists = await File.existsAsync(file);
@@ -65,8 +78,15 @@ export const Commands = {
         // add
         let created = await alot(jobs)
             .mapAsync(async job => {
+
+                let name = job
+                    .taskName
+                    .replace(/[^\w\_]/g, '_')
+                    .replace(/[_]{2,}/g, '_')
+                    .toLowerCase()
+
                 return await cronbee.ensure({
-                    taskName: job.taskName,
+                    taskName: `${PREFIX}\\${name}`,
                     taskRun: job.taskRun,
                     cron: job.cron,
                     schtaskFlags: job.schtaskFlags,
@@ -83,7 +103,7 @@ export const Commands = {
 namespace Jobs {
     export async function load (prefix) {
         let jobs = await new Scheduler().load();
-        let rgx = new RegExp(`^${ prefix }\\`);
+        let rgx = new RegExp(`^${ prefix }\\\\`);
 
         return jobs.filter(x => rgx.test(x.name));
     }

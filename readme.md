@@ -59,13 +59,19 @@ await cronbee.ensure({
 
 ### Scheduler CLI
 
-#### List active cron jobs
+##### List active cron jobs created with `cronbee`
 
 ```bash
 cronbee list
 ```
 
-#### Ensure cron jobs (from File)
+##### Remove active cron jobs created with `cronbee`
+
+```bash
+cronbee clear
+```
+
+##### Ensure cron jobs (from File)
 
 ```bash
 cronbee ensure ./cronbee.json
@@ -79,7 +85,8 @@ cronbee ensure ./cronbee.json
         {
             "taskName": "some_echo",
             "taskRun": "cronbee echo Foo",
-            "cron":  "0 0 12 * *"
+            "cron":  "0 12 * * *",
+            "schtaskFlags": "/sc daily /st 12:00"
         }
     ]
 }
