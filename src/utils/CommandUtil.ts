@@ -3,12 +3,21 @@ import { File } from 'atma-io';
 
 export namespace CommandUtil {
     export async function formatPaths(command: string, cwd: string) {
+
         command = command.trim();
+
+        let redirect = '';
+        let redirectIdx = command.indexOf('>>')
+        if (redirectIdx > -1) {
+            redirect = ' ' + command.substring(redirectIdx);
+            command = command.substring(0, redirectIdx).trim();
+        }
+
         command = ensureCwdIfCronbee(command, cwd);
 
         command = await rewriteAbsPath(command, cwd);
         command = ensureCwd(command, cwd);
-        return command;
+        return command + redirect;
     }
 
     async function rewriteAbsPath(command: string, cwd: string): Promise<string> {
