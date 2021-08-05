@@ -1,6 +1,6 @@
 {
     "name": "cronbee",
-    "version": "0.5.21",
+    "version": "0.5.22",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {

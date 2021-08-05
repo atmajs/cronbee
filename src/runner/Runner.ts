@@ -18,7 +18,7 @@ export class Runner {
         let command = HandleArgs.serialize(args);
 
         Monit.startLogger({
-            directory: class_Uri.combine(cwd, '/logs/monit')
+            directory: class_Uri.combine(cwd, '/logs/monit/')
         });
 
         let channel = Monit.createChannel('cronbee', {

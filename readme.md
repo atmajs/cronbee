@@ -1,7 +1,12 @@
 # Cronbee
 
+<p align='center'>
+    <img src='assets/background.jpg'/>
+</p>
+
 ----
-[![Build Status](https://travis-ci.org/atmajs/cronbee.svg?branch=master)](https://travis-ci.org/atmajs/cronbee)
+
+[![Build Status](https://travis-ci.com/atmajs/cronbee.svg?branch=master)](https://travis-ci.com/atmajs/cronbee)
 [![NPM version](https://badge.fury.io/js/cronbee.svg)](http://badge.fury.io/js/cronbee)
 
 Manage, run and log all your scheduled tasks using system capabilities with **`crontab`** and **`schtasks`**
