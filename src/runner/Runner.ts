@@ -14,7 +14,7 @@ export class Runner {
             return;
         }
 
-        let cwd = HandleArgs.extractCwdIfAny(args);
+        let cwd = HandleArgs.extractCwdIfAny(args) ?? process.cwd();
         let command = HandleArgs.serialize(args);
 
         Monit.startLogger({
