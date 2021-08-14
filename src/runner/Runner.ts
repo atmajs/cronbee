@@ -1,5 +1,5 @@
 import { Shell } from 'shellbee'
-import { Monit } from 'atma-server-monit'
+import { Everlog } from 'everlog'
 import { class_Uri } from 'atma-utils';
 import { Commands } from './Commands';
 
@@ -17,11 +17,11 @@ export class Runner {
         let cwd = HandleArgs.extractCwdIfAny(args) ?? process.cwd();
         let command = HandleArgs.serialize(args);
 
-        Monit.startLogger({
-            directory: class_Uri.combine(cwd, '/logs/monit/')
+        Everlog.initialize({
+            directory: class_Uri.combine(cwd, '/logs/everlog/')
         });
 
-        let channel = Monit.createChannel('cronbee', {
+        let channel = Everlog.createChannel('cronbee', {
             fields: [
                 {
                     name: 'Date',

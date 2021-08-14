@@ -1,7 +1,7 @@
-import { Scheduler } from '../scheduler/Scheduler';
+import alot from 'alot';
 import appcfg from 'appcfg'
 import { File } from 'atma-io';
-import alot from 'alot';
+import { Scheduler } from '../scheduler/Scheduler';
 import { ICreateJob } from '../models/IJob';
 
 const PREFIX = 'cronbee';

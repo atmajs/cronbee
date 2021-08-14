@@ -1,6 +1,6 @@
 {
     "name": "cronbee",
-    "version": "0.5.22",
+    "version": "0.5.23",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -14,9 +14,9 @@
         "alot": "^0.2.84",
         "appcfg": "^0.4.53",
         "atma-io": "^1.2.34",
-        "atma-server-monit": "^1.0.30",
         "atma-utest": "^0.21.14",
         "atma-utils": "^0.1.38",
+        "everlog": "^1.0.5",
         "memd": "^0.2.90",
         "shellbee": "^0.5.14"
     },
@@ -63,7 +63,7 @@
             },
             "dynamicDependencies": [
                 "shellbee",
-                "atma-server-monit",
+                "everlog",
                 "memd",
                 "appcfg",
                 "alot",

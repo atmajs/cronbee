@@ -11,7 +11,40 @@
 
 Manage, run and log all your scheduled tasks using system capabilities with **`crontab`** and **`schtasks`**
 
-### Scheduler API
+
+
+### CLI
+
+```bash
+# List active cron jobs created with `cronbee`
+$ cronbee list
+
+# Remove active cron jobs created with `cronbee`
+cronbee clear
+
+# Ensure cron jobs (from File)
+$ cronbee ensure ./cronbee.json
+```
+
+
+`JSON` sample, see `cronbee.ensure` API for full parameters list for a task.
+
+```json
+{
+    "tasks": [
+        {
+            "taskName": "some_echo",
+            "taskRun": "cronbee echo Foo",
+            "cron":  "0 12 * * *",
+            "schtaskFlags": "/sc daily /st 12:00"
+        }
+    ]
+}
+```
+
+> `taskRun` - `cronbee` prefix means, the `os` starts the `cronbee` process at specified interval. `cronbee` starts underlying process. The wrapped process is for monitoring and logging purpose. You will get the information how much time your task took and if it was successful. If you do not need the logging feature, you can provide just the command (without `cronbee`)
+
+### API
 
 ##### Create scheduled task
 
@@ -52,7 +85,7 @@ await cronbee.remove({ taskName: 'check emails' });
 
 ### Runner
 
-Though you can define any shell command to be executed at scheduled time, you can also use the `cronbee` as a wrapped runner, to log executions to CSV files. Just prefix your command with `cronbee` and you are done. The logs can be found in `./logs/monit/cronbee`
+Though you can define any shell command to be executed at scheduled time by the `os`, you can also use the `cronbee` as the wrapped runner, to log executions to CSV files. Just prefix your command with `cronbee` and you are done. The logs can be found in `./logs/everlog/cronbee`
 
 ```ts
 await cronbee.ensure({
@@ -61,41 +94,6 @@ await cronbee.ensure({
 });
 ```
 
-
-### Scheduler CLI
-
-##### List active cron jobs created with `cronbee`
-
-```bash
-cronbee list
-```
-
-##### Remove active cron jobs created with `cronbee`
-
-```bash
-cronbee clear
-```
-
-##### Ensure cron jobs (from File)
-
-```bash
-cronbee ensure ./cronbee.json
-```
-
-`JSON` sample:
-
-```json
-{
-    "tasks": [
-        {
-            "taskName": "some_echo",
-            "taskRun": "cronbee echo Foo",
-            "cron":  "0 12 * * *",
-            "schtaskFlags": "/sc daily /st 12:00"
-        }
-    ]
-}
-```
 
 
 ----
