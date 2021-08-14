@@ -7,6 +7,6 @@ UTest({
             command: 'node index dir'
         });
 
-        has_(shell.std.join(''), '.travis.yml');
+        has_(shell.std.join(''), 'tsconfig-build.json');
     }
 })

@@ -94,6 +94,12 @@ await cronbee.ensure({
 });
 ```
 
+### Additional Hints
 
+1. We can start commands from `./node_modules/.bin/` directory, so you can use just the command name.
+
+
+🏁
 
 ----
+©️ MIT License.

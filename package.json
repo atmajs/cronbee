@@ -1,6 +1,6 @@
 {
     "name": "cronbee",
-    "version": "0.5.23",
+    "version": "0.5.24",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -25,7 +25,8 @@
         "app-bundler": "0.0.70",
         "atma": "^0.12.18",
         "atma-loader-ts": "^1.1.12",
-        "dts-bundle": "^0.7.3"
+        "dts-bundle": "^0.7.3",
+        "typedoc": "^0.21.5"
     },
     "scripts": {
         "build": "app-bundler && npm run dts",
@@ -33,7 +34,8 @@
         "watch": "app-bundler -watch",
         "release": "echo \"Run atma pub -m \"message\"\"",
         "test": "atma test",
-        "server": "atma server"
+        "server": "atma server",
+        "typedoc": "typedoc --tsconfig ./tsconfig-typedoc.json && atma task copy"
     },
     "app-bundler": {
         "apps": {
@@ -109,6 +111,13 @@
                         },
                         "sourceMap": false
                     }
+                }
+            }
+        },
+        "tasks": {
+            "copy": {
+                "files": {
+                    "./assets/background.jpg": "./docs/assets/background.jpg"
                 }
             }
         }
