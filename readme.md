@@ -98,6 +98,7 @@ await cronbee.ensure({
 
 1. We can start commands from `./node_modules/.bin/` directory, so you can use just the command name.
 
+2. Output all std output to a file by appending `>> /path/to/logfile.log 2>&1` to you cron command.
 
 🏁
 

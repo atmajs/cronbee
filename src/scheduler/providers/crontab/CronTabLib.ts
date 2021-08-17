@@ -30,7 +30,7 @@ export class CronTabLib implements IScheduler {
         return CronJob.toModel(job);
     }
 
-    async remove (params: { taskName: string }) {
+    async remove (params: { taskName: string }):Promise<this> {
         let crontab = await CronTabLoader.load();
         let job = crontab._jobs.find(x => x._comment?.comment === params.taskName);
         if (job == null) {
@@ -38,6 +38,7 @@ export class CronTabLib implements IScheduler {
         }
         crontab.remove(job);
         await crontab.save();
+        return this;
     }
 };
 

@@ -12,12 +12,6 @@ export class Scheduler implements IScheduler{
     async ensure(params: ICreateJob): Promise<any> {
         let cwd = params.workingDirectory ?? process.cwd();
 
-        // if (params.taskRun.includes('cronbee') && params.taskRun.includes('-cwd') === false) {
-        //     params.taskRun = `${params.taskRun} --cwd ${cwd}`;
-        // }
-        // if (params.taskRun.includes('-cwd') === false && process.platform !== 'win32') {
-        //     params.taskRun = `cd ${cwd} && ${params.taskRun}`;
-        // }
         params.taskRun = await CommandUtil.formatPaths(params.taskRun, cwd);
         return this.getSystem().ensure(params);
     }
@@ -26,7 +20,7 @@ export class Scheduler implements IScheduler{
     }
 
     @memd.deco.memoize()
-    private getSystem () {
+    private getSystem (): IScheduler {
         if (process.platform === 'win32') {
             return new SchtasksLib();
         }
