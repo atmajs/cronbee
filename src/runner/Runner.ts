@@ -2,20 +2,22 @@ import { Shell } from 'shellbee'
 import { Everlog } from 'everlog'
 import { class_Uri } from 'atma-utils';
 import { Commands } from './Commands';
+import { CommandUtil } from '../utils/CommandUtil';
 
 export class Runner {
-    async run () {
+    async execute (params: string | string[]): Promise<Shell> {
+        if (typeof params === 'string') {
+            params = CommandUtil.split(params);
+        }
 
-        let args = process.argv.slice(2);
-
-        let task = args[0];
+        let task = params[0];
         if (task in Commands) {
-            await Commands[task](args.slice(1));
+            await Commands[task](params.slice(1));
             return;
         }
 
-        let cwd = HandleArgs.extractCwdIfAny(args) ?? process.cwd();
-        let command = HandleArgs.serialize(args);
+        let cwd = HandleArgs.extractCwdIfAny(params) ?? process.cwd();
+        let command = HandleArgs.serialize(params);
 
         Everlog.initialize({
             directory: class_Uri.combine(cwd, '/logs/everlog/')
@@ -65,6 +67,8 @@ export class Runner {
                 shell.stderr.join(''),
             ]);
             channel.flush();
+
+            return shell;
         } catch (error) {
             channel.writeRow([
                 new Date(),
@@ -79,6 +83,11 @@ export class Runner {
 
         }
     }
+    async runFromCli () {
+
+        let args = process.argv.slice(2);
+        await this.execute(args);
+    }
 }
 
 
@@ -91,6 +100,7 @@ namespace HandleArgs {
             }
         }
     }
+    /** Serialize array of parameters into one single command line string */
     export function serialize (args: string[]) {
         whitespaces(args);
         return args.join(' ');

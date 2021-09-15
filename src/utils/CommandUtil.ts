@@ -19,6 +19,36 @@ export namespace CommandUtil {
         command = ensureCwd(command, cwd);
         return command + redirect;
     }
+    export function split(command: string): string[] {
+        let args = [];
+        for (let i = 0; i < command.length; i++) {
+            let c = command[i];
+            if (c === ' ') {
+                continue;
+            }
+            if (c === '"') {
+                let end = command.indexOf('"', i + 1);
+                if (end === -1) {
+                    throw new Error(`Invalid command ${command}. Quote not closed`);
+                }
+                args.push(command.slice(i + 1, end));
+                i = end + 1;
+                continue;
+            }
+
+            let rgx = /(\s|$)/g;
+
+            rgx.lastIndex = i;
+            let match = rgx.exec(command);
+            if (match == null) {
+                throw new Error(`Invalid command ${command}. Param has no ending`);
+            }
+
+            args.push(command.slice(i, match.index));
+            i = match.index;
+        }
+        return args;
+    }
 
     async function rewriteAbsPath(command: string, cwd: string): Promise<string> {
         let rgxCommand = /^[^\s]+/;

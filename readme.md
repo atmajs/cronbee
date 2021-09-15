@@ -20,7 +20,7 @@ Manage, run and log all your scheduled tasks using system capabilities with **`c
 $ cronbee list
 
 # Remove active cron jobs created with `cronbee`
-cronbee clear
+$ cronbee clear
 
 # Ensure cron jobs (from File)
 $ cronbee ensure ./cronbee.json
@@ -45,6 +45,8 @@ $ cronbee ensure ./cronbee.json
 > `taskRun` - `cronbee` prefix means, the `os` starts the `cronbee` process at specified interval. `cronbee` starts underlying process. The wrapped process is for monitoring and logging purpose. You will get the information how much time your task took and if it was successful. If you do not need the logging feature, you can provide just the command (without `cronbee`)
 
 ### API
+
+[Documentation 🔗](https://docs.atma.dev/cronbee)
 
 ##### Create scheduled task
 
@@ -98,7 +100,7 @@ await cronbee.ensure({
 
 1. We can start commands from `./node_modules/.bin/` directory, so you can use just the command name.
 
-2. Output all std output to a file by appending `>> /path/to/logfile.log 2>&1` to you cron command.
+2. Output all std output to a file by appending `>> /path/to/logfile.log 2>&1` to you task command.
 
 🏁
 

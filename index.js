@@ -2,4 +2,4 @@
 
 let cronbee = require('./lib/cli');
 
-cronbee.run();
+cronbee.runFromCli();

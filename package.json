@@ -1,6 +1,6 @@
 {
     "name": "cronbee",
-    "version": "0.5.25",
+    "version": "0.5.26",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -10,6 +10,12 @@
         "name": "Alex Kit",
         "email": "alex.kit@atmajs.com"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/atmajs/cronbee"
+    },
+    "keywords": ["crontab", "cron", "tasks"],
+
     "dependencies": {
         "alot": "^0.2.84",
         "appcfg": "^0.4.53",
