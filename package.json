@@ -1,6 +1,7 @@
 {
     "name": "cronbee",
-    "version": "0.5.26",
+    "description": "Manage and execute cron jobs by the OS (crontab, schtasks) ",
+    "version": "0.5.27",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -14,7 +15,18 @@
         "type": "git",
         "url": "https://github.com/atmajs/cronbee"
     },
-    "keywords": ["crontab", "cron", "tasks"],
+    "keywords": [
+        "cron",
+        "node cron",
+        "node-cron",
+        "schedule",
+        "scheduler",
+        "cronjob",
+        "cron job",
+        "crontab",
+        "schtasks"
+	],
+	"license": "MIT",
 
     "dependencies": {
         "alot": "^0.2.84",
