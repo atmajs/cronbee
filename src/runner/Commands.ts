@@ -57,6 +57,16 @@ export const Commands = {
             return;
         }
 
+        let activeJobs = jobs.filter(x => x.active !== false);
+        if (activeJobs.length !== jobs.length) {
+            let inactiveJobs = jobs
+                .filter(x => x.active === false)
+                .map(x => x.taskName);
+
+            console.log(`Inactive jobs`, inactiveJobs.join(', '));
+            jobs = activeJobs;
+        }
+
         for (let job of jobs) {
             if (!job.taskName || !job.taskRun || !(job.cron || job.schtaskFlags)) {
                 console.error(`Job is invalid. Should contain: name, command, cron || schtaskFlags`);

@@ -14,6 +14,8 @@ export interface ICreateJob {
 
     cron?: string
 
+    active?: boolean
+
     /** Timing flags for Schtask */
     schtaskFlags?: string
 }

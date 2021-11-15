@@ -1,7 +1,7 @@
 {
     "name": "cronbee",
     "description": "Manage and execute cron jobs by the OS (crontab, schtasks) ",
-    "version": "0.5.27",
+    "version": "0.5.28",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -25,11 +25,10 @@
         "cron job",
         "crontab",
         "schtasks"
-	],
-	"license": "MIT",
-
+    ],
+    "license": "MIT",
     "dependencies": {
-        "alot": "^0.2.84",
+        "alot": "^0.2.93",
         "appcfg": "^0.4.53",
         "atma-io": "^1.2.34",
         "atma-utest": "^0.21.14",

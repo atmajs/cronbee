@@ -30,6 +30,7 @@ declare module 'cronbee/models/IJob' {
         taskName: string;
         taskRun: string;
         cron?: string;
+        active?: boolean;
         /** Timing flags for Schtask */
         schtaskFlags?: string;
     }
