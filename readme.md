@@ -31,6 +31,7 @@ $ cronbee ensure ./cronbee.json
 
 ```json
 {
+    "namespace": "foobar",
     "tasks": [
         {
             "taskName": "some_echo",

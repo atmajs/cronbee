@@ -4,24 +4,26 @@ import { File } from 'atma-io';
 import { Scheduler } from '../scheduler/Scheduler';
 import { ICreateJob } from '../models/IJob';
 
-const PREFIX = 'cronbee';
+const NAMESPACE_DEFAULT = 'cronbee';
 
 export const Commands = {
     async list (args: string[]) {
 
         let cfg = await appcfg.fetch([]);
-        let prefix = cfg.prefix ?? PREFIX
-        let jobs = await Jobs.load(prefix);
+        let namespace = cfg.prefix ?? cfg.namespace ?? NAMESPACE_DEFAULT
+        let jobs = await Jobs.load(namespace);
 
         if (jobs.length) {
             console.log(jobs);
         } else {
-            console.log(`Still no tasks with prefix: ${prefix}`);
+            console.log(`Still no tasks with prefix: ${namespace}`);
         }
     },
     async clear (args: string[]) {
         let cronbee = new Scheduler();
-        let currentJobs = await Jobs.load(PREFIX);
+        let cfg = await appcfg.fetch([]);
+        let namespace = cfg.prefix ?? cfg.namespace ?? NAMESPACE_DEFAULT;
+        let currentJobs = await Jobs.load(namespace);
 
         // clear
         await alot(currentJobs)
@@ -39,6 +41,9 @@ export const Commands = {
             console.error(`Config file "${file}" not found`);
             return;
         }
+        let cfg = await appcfg.fetch([]);
+        let namespace = cfg.prefix ?? cfg.namespace ?? NAMESPACE_DEFAULT;
+
         let config = await File.readAsync<any>(file);
         if (config == null || typeof config === 'string') {
             console.error(`Config from "${file}" is not resolved to Object`);
@@ -50,6 +55,7 @@ export const Commands = {
             jobs = config;
         } else if (Array.isArray(config.tasks)) {
             jobs = config.tasks;
+            namespace = config.namespace ?? namespace;
         }
 
         if (Array.isArray(jobs) === false) {
@@ -76,7 +82,7 @@ export const Commands = {
         }
 
         let cronbee = new Scheduler();
-        let currentJobs = await Jobs.load(PREFIX);
+        let currentJobs = await Jobs.load(namespace);
 
         // clear
         await alot(currentJobs)
@@ -96,7 +102,7 @@ export const Commands = {
                     .toLowerCase()
 
                 return await cronbee.ensure({
-                    taskName: `${PREFIX}\\${name}`,
+                    taskName: `${namespace}\\${name}`,
                     taskRun: job.taskRun,
                     cron: job.cron,
                     schtaskFlags: job.schtaskFlags,

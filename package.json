@@ -1,7 +1,7 @@
 {
     "name": "cronbee",
     "description": "Manage and execute cron jobs by the OS (crontab, schtasks) ",
-    "version": "0.5.28",
+    "version": "0.5.29",
     "main": "./lib/cronbee.js",
     "types": "./lib/cronbee.d.ts",
     "bin": {
@@ -40,7 +40,7 @@
     "devDependencies": {
         "@types/jquery": "^3.5.6",
         "@types/node": "^12.6.2",
-        "app-bundler": "0.0.70",
+        "app-bundler": "^0.0.99",
         "atma": "^0.12.18",
         "atma-loader-ts": "^1.1.12",
         "dts-bundle": "^0.7.3",
